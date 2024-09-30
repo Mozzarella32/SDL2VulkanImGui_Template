@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.5)
 project(ImGuiVulkanSDL2_Project)
 
 include(FetchContent)
@@ -16,6 +16,13 @@ FetchContent_Declare(
     GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
     GIT_TAG release-2.28.2  # Verwende die neueste stabile Version
 )
+
+# Setze Optionen für SDL2
+set(SDL_TESTS OFF FORCE)
+set(SDL_EXAMPLES OFF FORCE)
+set(SDL_STATIC ON FORCE)
+set(SDL_SHARED OFF FORCE)
+
 FetchContent_MakeAvailable(SDL2)
 
 # Dear ImGui (Docking Branch) herunterladen
@@ -59,9 +66,9 @@ list(REMOVE_ITEM MY_SOURCE ${PCH_HEADERS})
 list(REMOVE_ITEM MY_HEADERS ${PCH_HEADERS})
 
 # Füge ImGui-Quellen zur MY_SOURCE-Liste hinzu
-list(APPEND MY_SOURCE ${IMGUI_SOURCES})
+#list(APPEND MY_SOURCE ${IMGUI_SOURCES})
 
-add_executable(${PROJECT_NAME} ${MY_SOURCE} ${MY_HEADERS})
+add_executable(${PROJECT_NAME} ${MY_SOURCE} ${IMGUI_SOURCES} ${MY_HEADERS})
 
 # Präkompilierte Header konfigurieren (wenn vorhanden)
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${PCH_HEADERS})
